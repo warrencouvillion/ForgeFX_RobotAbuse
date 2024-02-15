@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -876546973899608171, guid: b8892567076d0a2468b66b668aa23151, type: 3}
+    - target: {fileID: -8373877503670111075, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1551
+      objectReference: {fileID: 0}
     - target: {fileID: -7793387831521035477, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -451,10 +455,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4676984815020601560, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1655353166}
+      addedObject: {fileID: 1655353169}
     - targetCorrespondingSourceObject: {fileID: 4676984815020601560, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1655353169}
+      addedObject: {fileID: 1655353166}
   m_SourcePrefab: {fileID: 100100000, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
 --- !u!1 &1655353164 stripped
 GameObject:
@@ -494,8 +498,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.14321083, y: 0.104841545, z: 0.06443927}
-  m_Center: {x: 0, y: -0.0000000037252903, z: 0}
+  m_Size: {x: 0.09, y: 0.08320439, z: 0.06443927}
+  m_Center: {x: 0, y: 0.011460789, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
