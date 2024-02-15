@@ -16,7 +16,23 @@ public class HighlightOnMouseOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_renderers = GetComponentsInChildren<Renderer>();
+        if (gameObject.tag == "Untagged")
+        {
+            m_renderers = GetComponentsInChildren<Renderer>();
+        }
+        else
+        {
+            var sameTag = GameObject.FindGameObjectsWithTag(gameObject.tag);
+            if (sameTag != null) 
+            {
+                m_renderers = new Renderer[sameTag.Length];
+                int index = 0;
+                foreach(var g in sameTag)
+                {
+                    m_renderers[index++] = g.GetComponent<Renderer>();
+                }
+            }
+        }
         DoHighlightAction(mat =>
         {
             mat.SetFloat("_HighlightPower", m_highlightPower);
