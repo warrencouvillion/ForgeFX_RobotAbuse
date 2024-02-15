@@ -441,11 +441,61 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -876546973899608171, guid: b8892567076d0a2468b66b668aa23151, type: 3}
+    - target: {fileID: 8530993729619763701, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b8892567076d0a2468b66b668aa23151, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4676984815020601560, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1655353166}
+    - targetCorrespondingSourceObject: {fileID: 4676984815020601560, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1655353169}
   m_SourcePrefab: {fileID: 100100000, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+--- !u!1 &1655353164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4676984815020601560, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+  m_PrefabInstance: {fileID: 1346535208}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1655353166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655353164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8470518258d8c4fa8b07aadb6c8e59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_highlightColor: {r: 0, g: 1, b: 0.133492, a: 1}
+  m_highlightPower: 2
+--- !u!65 &1655353169
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655353164}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.14321083, y: 0.104841545, z: 0.06443927}
+  m_Center: {x: 0, y: -0.0000000037252903, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
