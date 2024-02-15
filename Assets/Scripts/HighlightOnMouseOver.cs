@@ -17,33 +17,40 @@ public class HighlightOnMouseOver : MonoBehaviour
     void Start()
     {
         m_renderers = GetComponentsInChildren<Renderer>();
+        DoHighlightAction(mat =>
+        {
+            mat.SetFloat("_HighlightPower", m_highlightPower);
+            mat.SetColor("_HighlightColor", m_highlightColor);
+        });
 
+    }
+    
+    public void setHiglightState(Material mat, bool state)
+    {
+        Shader shader = mat.shader;
+        if (shader != null)
+        {
+            LocalKeyword keyword = new LocalKeyword(shader, "_HIGHLIGHTON");
+            mat.SetKeyword(keyword, state);
+        }
     }
 
     void OnMouseOver()
     {
-        setHighlight(true);
-
+        DoHighlightAction( (mat) => setHiglightState(mat, true) );
     }
 
-    private void OnMouseExit()
+    void OnMouseExit()
     {
-        setHighlight(false);
+        DoHighlightAction( (mat) => setHiglightState(mat, false) );
     }
 
-    private void setHighlight(bool state)
+    void DoHighlightAction(System.Action<Material> action)
     { 
         foreach(var rend in m_renderers)
         {
             var mat = rend.material;
-            var shader = mat.shader;
-            if(shader != null )
-            {
-                LocalKeyword keyword = new LocalKeyword(shader, "_HIGHLIGHTON");
-                mat.SetKeyword(keyword, state);
-                mat.SetFloat("_HighlightPower", m_highlightPower);
-                mat.SetColor("_HighlightColor", m_highlightColor);
-            }
+            action(mat);
         }
 
     }
