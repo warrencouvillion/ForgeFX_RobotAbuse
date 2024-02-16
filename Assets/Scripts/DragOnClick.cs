@@ -6,12 +6,12 @@ public class DragOnClick : MonoBehaviour
 {
     public float m_mouseMovementScale = 0.001f;
     Transform rootXform;
+    //TODO: find the camera
     public GameObject m_camera;
 
     // Start is called before the first frame update
     void Start()
     {
-        
         rootXform = transform;
         while(rootXform.parent != null && rootXform.parent.gameObject.tag == gameObject.tag)
         {
@@ -25,7 +25,19 @@ public class DragOnClick : MonoBehaviour
         
     }
 
-    bool m_isMoving = false;
+    private bool m_movingState = false;
+    bool m_isMoving
+    {
+        get { return m_movingState; }
+        set
+        {
+            m_movingState = value;
+            //Hide the cursor during motion so user can't tell when it's not
+            //over the part. The part becomes the cursor.
+            Cursor.visible = !value;
+        }
+    }
+
     Vector3 m_lastMousePos;
 
     private void OnMouseDrag()

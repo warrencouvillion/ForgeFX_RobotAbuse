@@ -53,12 +53,26 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     void OnMouseOver()
     {
-        DoHighlightAction( (mat) => setHiglightState(mat, true) );
+        //If another piece is being moved, don't highlight
+        if (!Input.GetMouseButton(0))
+        {
+            DoHighlightAction((mat) => setHiglightState(mat, true));
+        }
     }
 
     void OnMouseExit()
     {
-        DoHighlightAction( (mat) => setHiglightState(mat, false) );
+        //Sometimes the cursor and part will diverge during motion, but we
+        //don't want to lose highlighting during motion.
+        if (!Input.GetMouseButton(0))
+        {
+            DoHighlightAction((mat) => setHiglightState(mat, false));
+        }
+    }
+
+    private void OnMouseUp()
+    {
+        DoHighlightAction((mat) => setHiglightState(mat, false));
     }
 
     void DoHighlightAction(System.Action<Material> action)
