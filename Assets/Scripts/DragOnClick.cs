@@ -6,6 +6,7 @@ public class DragOnClick : MonoBehaviour
 {
     public float m_attachDistance = 0.1f;
     public float m_mouseMovementScale = 0.001f;
+
     private Transform m_groupRootXform;
     private Transform m_parentXform;
     private Vector3 m_anchorLocalPosition;
@@ -20,8 +21,15 @@ public class DragOnClick : MonoBehaviour
             m_groupRootXform = m_groupRootXform.parent;
         }
 
-        m_parentXform= m_groupRootXform.parent;
+        m_parentXform = m_groupRootXform.parent;
         m_anchorLocalPosition = m_groupRootXform.localPosition;
+
+        var dragger = m_groupRootXform.GetComponent<DragOnClick>();
+        if( dragger != null )
+        {
+            m_attachDistance = dragger.m_attachDistance;
+        }
+
     }
 
     // Update is called once per frame
@@ -69,12 +77,26 @@ public class DragOnClick : MonoBehaviour
         m_isMoving = false;
         if (m_parentXform != null)
         {
-            float distance = Vector3.Distance(m_groupRootXform.position, m_parentXform.position);
+            //Get position wrt parent 
+            var startWrtParent = m_parentXform.TransformPoint(m_anchorLocalPosition);
+            float distance = Vector3.Distance(m_groupRootXform.position, startWrtParent); 
             if(distance < m_attachDistance)
             {
-                m_groupRootXform.parent = m_parentXform;
-                m_groupRootXform.localPosition = m_anchorLocalPosition;
+                StartCoroutine("ReturnToStartPosition");
             }
         }
+    }
+
+    private IEnumerator ReturnToStartPosition()
+    {
+        m_groupRootXform.parent = m_parentXform;
+        var startPos = m_groupRootXform.localPosition;
+        for (float frac = 0; frac < 1.0f; frac += 0.2f) 
+        {
+            var pos = Vector3.Lerp(startPos, m_anchorLocalPosition, frac);
+            m_groupRootXform.localPosition= pos;
+            yield return new WaitForSeconds(1.0f/30.0f);
+        }
+        m_groupRootXform.localPosition = m_anchorLocalPosition;
     }
 }

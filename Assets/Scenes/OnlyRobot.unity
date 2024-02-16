@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attachDistance: 0.01
   m_mouseMovementScale: 0.001
 --- !u!1 &476206426 stripped
 GameObject:
@@ -630,6 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attachDistance: 0.1
   m_mouseMovementScale: 0.001
 --- !u!1 &1656200645 stripped
 GameObject:
@@ -683,6 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attachDistance: 0.1
   m_mouseMovementScale: 0.001
 --- !u!1 &1984867276 stripped
 GameObject:
@@ -738,6 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attachDistance: 0.1
   m_mouseMovementScale: 0.001
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
