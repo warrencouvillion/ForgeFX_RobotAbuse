@@ -18,20 +18,26 @@ public class UFOMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var increment = m_speed * Time.deltaTime;
-        m_controller.Move(Input.GetAxis("Horizontal") * transform.right * increment);
-        m_controller.Move(Input.GetAxis("Vertical") * transform.forward* increment);
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            Vector3 mouseEulers = 
+                new Vector3(-Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"), 0) 
+                    * m_rotationalSpeed * Time.deltaTime;
+            transform.Rotate(mouseEulers);
+
+        }
+        else
+        {
+            float increment = m_speed * Time.deltaTime;
+            m_controller.Move(Input.GetAxis("Horizontal") * transform.right * increment);
+            m_controller.Move(Input.GetAxis("Vertical") * transform.forward * increment);
+        }
 
         if(Input.GetKeyDown(KeyCode.Home) || Input.GetKeyDown(KeyCode.Keypad7)) 
         {
             transform.LookAt(m_target.transform);
         }
 
-        if(Input.GetMouseButton(1))
-        {
-            increment = m_rotationalSpeed * Time.deltaTime;
-            Vector3 mouseEulers = new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0);
-            m_controller.transform.Rotate(mouseEulers * increment);
-        }
+        
     }
 }
