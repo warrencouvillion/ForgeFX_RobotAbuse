@@ -14,7 +14,6 @@ public class DragOnClick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         m_groupRootXform = transform;
         while(m_groupRootXform.parent != null && m_groupRootXform.parent.gameObject.tag == gameObject.tag)
         {
@@ -24,6 +23,8 @@ public class DragOnClick : MonoBehaviour
         m_parentXform = m_groupRootXform.parent;
         m_anchorLocalPosition = m_groupRootXform.localPosition;
 
+        //All parts of a group should have the same anchor distance as the root
+        //part.
         var dragger = m_groupRootXform.GetComponent<DragOnClick>();
         if( dragger != null )
         {
@@ -32,11 +33,6 @@ public class DragOnClick : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private bool m_movingState = false;
     bool m_isMoving
@@ -58,9 +54,8 @@ public class DragOnClick : MonoBehaviour
         if(!m_isMoving)
         {
             m_groupRootXform.parent = null;
-
             m_lastMousePos = Input.mousePosition;
-            m_isMoving=true;
+            m_isMoving = true;
         }
         var mousePos = Input.mousePosition;
         var deltaMouse = (mousePos - m_lastMousePos) * m_mouseMovementScale;
@@ -77,9 +72,10 @@ public class DragOnClick : MonoBehaviour
         m_isMoving = false;
         if (m_parentXform != null)
         {
-            //Get position wrt parent 
-            var startWrtParent = m_parentXform.TransformPoint(m_anchorLocalPosition);
-            float distance = Vector3.Distance(m_groupRootXform.position, startWrtParent); 
+            //Get anchor point in world coordinates.
+            var anchorPointWorld = m_parentXform.TransformPoint(m_anchorLocalPosition);
+            //Get distance of root part to that position.
+            float distance = Vector3.Distance(m_groupRootXform.position, anchorPointWorld); 
             if(distance < m_attachDistance)
             {
                 StartCoroutine("ReturnToStartPosition");
