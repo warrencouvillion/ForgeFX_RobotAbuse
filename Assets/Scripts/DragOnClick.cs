@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DragOnClick : MonoBehaviour
 {
-    public float m_speed = 0.01f;
+    public float m_mouseMovementScale = 0.001f;
     Transform rootXform;
 
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class DragOnClick : MonoBehaviour
             m_isMoving=true;
         }
         var mousePos = Input.mousePosition;
-        var deltaMouse = (mousePos - m_lastMousePos) * m_speed;
+        var deltaMouse = (mousePos - m_lastMousePos) * m_mouseMovementScale;
         m_lastMousePos = mousePos;
 
         Debug.Log(deltaMouse);
