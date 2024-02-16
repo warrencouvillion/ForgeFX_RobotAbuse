@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class DragOnClick : MonoBehaviour
 {
     public float m_attachDistance = 0.1f;
     public float m_mouseMovementScale = 0.001f;
+    public GameObject m_textObject = null;
+    TextMeshProUGUI m_textMesh = null;
 
     private Transform m_groupRootXform;
     private Transform m_parentXform;
@@ -14,8 +18,12 @@ public class DragOnClick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (m_textObject != null)
+        {
+            m_textMesh = m_textObject.GetComponent<TextMeshProUGUI>();
+        }
         m_groupRootXform = transform;
-        while(m_groupRootXform.parent != null && m_groupRootXform.parent.gameObject.tag == gameObject.tag)
+        while (m_groupRootXform.parent != null && m_groupRootXform.parent.gameObject.tag == gameObject.tag)
         {
             m_groupRootXform = m_groupRootXform.parent;
         }
@@ -23,14 +31,22 @@ public class DragOnClick : MonoBehaviour
         m_parentXform = m_groupRootXform.parent;
         m_anchorLocalPosition = m_groupRootXform.localPosition;
 
+        if (m_groupRootXform != transform)
+        {
+            Invoke("GetValuesFromRoot", 0.5f);
+        }
+    }
+
+    private void GetValuesFromRoot()
+    {
         //All parts of a group should have the same anchor distance as the root
         //part.
-        var dragger = m_groupRootXform.GetComponent<DragOnClick>();
+        var dragger = m_groupRootXform.gameObject.GetComponent<DragOnClick>();
         if( dragger != null )
         {
             m_attachDistance = dragger.m_attachDistance;
+            m_textMesh = dragger.m_textMesh;
         }
-
     }
 
 
@@ -44,6 +60,10 @@ public class DragOnClick : MonoBehaviour
             //Hide the cursor during motion so user can't tell when it's not
             //over the part. The part becomes the cursor.
             Cursor.visible = !value;
+            if (m_textMesh != null && value)
+            {
+                m_textMesh.text = "Detached";
+            }
         }
     }
 
@@ -94,5 +114,6 @@ public class DragOnClick : MonoBehaviour
             yield return new WaitForSeconds(1.0f/30.0f);
         }
         m_groupRootXform.localPosition = m_anchorLocalPosition;
+        m_textMesh.text = "Attached";
     }
 }

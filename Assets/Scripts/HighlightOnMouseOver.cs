@@ -30,13 +30,22 @@ public class HighlightOnMouseOver : MonoBehaviour
                 foreach(var g in sameTag)
                 {
                     m_renderers[index++] = g.GetComponent<Renderer>();
+                    if(!CompareTag(g.transform.parent.gameObject.tag))
+                    {
+                        var hiliter = g.GetComponent<HighlightOnMouseOver>();
+                        if(hiliter != null)
+                        {
+                            m_highlightColor = hiliter.m_highlightColor;
+                        }
+
+                    }
+               
                 }
             }
         }
         DoHighlightAction(mat =>
         {
             mat.SetFloat("_HighlightPower", m_highlightPower);
-            mat.SetColor("_HighlightColor", m_highlightColor);
         });
 
     }
@@ -50,6 +59,8 @@ public class HighlightOnMouseOver : MonoBehaviour
         {
             return;
         }
+
+        mat.SetColor("_HighlightColor", m_highlightColor);
 
         Shader shader = mat.shader;
         if (shader != null)
