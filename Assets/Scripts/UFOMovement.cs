@@ -35,9 +35,20 @@ public class UFOMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Home) || Input.GetKeyDown(KeyCode.Keypad7)) 
         {
-            transform.LookAt(m_target.transform);
+            StartCoroutine("LookAtTarget");
+        }
+    }
+
+    IEnumerator LookAtTarget()
+    {
+        Vector3 relativePos = m_target.transform.position - transform.position;
+        Quaternion lookAtRotation = Quaternion.LookRotation(relativePos);
+        Quaternion startRotation = transform.rotation;
+        for(float frac = 0; frac < 1.0f; frac += 0.1f)
+        {
+            transform.rotation = Quaternion.Lerp(startRotation, lookAtRotation, frac);
+            yield return new WaitForSeconds(1.0f / 30.0f);
         }
 
-        
     }
 }

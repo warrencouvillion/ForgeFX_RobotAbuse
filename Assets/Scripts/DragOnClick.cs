@@ -114,6 +114,9 @@ public class DragOnClick : MonoBehaviour
             yield return new WaitForSeconds(1.0f/30.0f);
         }
         m_groupRootXform.localPosition = m_anchorLocalPosition;
-        m_textMesh.text = "Attached";
+        if (m_textMesh != null)
+        {
+            m_textMesh.text = "Attached";
+        }
     }
 }
