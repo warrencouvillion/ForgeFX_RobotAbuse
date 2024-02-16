@@ -6,10 +6,12 @@ public class DragOnClick : MonoBehaviour
 {
     public float m_mouseMovementScale = 0.001f;
     Transform rootXform;
+    public GameObject m_camera;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         rootXform = transform;
         while(rootXform.parent != null && rootXform.parent.gameObject.tag == gameObject.tag)
         {
@@ -41,7 +43,7 @@ public class DragOnClick : MonoBehaviour
 
         if (rootXform != null) 
         {
-            rootXform.position += deltaMouse;
+            rootXform.position += m_camera.transform.TransformDirection(deltaMouse);
         }
     }
 

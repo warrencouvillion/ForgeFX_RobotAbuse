@@ -177,7 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.001
+  m_mouseMovementScale: 0.001
+--- !u!1 &476206426 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
+  m_PrefabInstance: {fileID: 1346535208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +288,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -364,6 +370,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae461dd0956c5e54aa1351fd8e572db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 1
+  m_rotationalSpeed: 50
+  m_target: {fileID: 476206426}
 --- !u!1001 &1346535208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -609,7 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.001
+  m_mouseMovementScale: 0.001
 --- !u!1 &1656200645 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2180475303555262147, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
@@ -662,7 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.001
+  m_mouseMovementScale: 0.001
 --- !u!1 &1984867276 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8313914560102798367, guid: 8f97077bdbb4cc84289cc1b59b0a2a43, type: 3}
@@ -717,7 +738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c16b751b73ba4b45990502097f6d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.001
+  m_mouseMovementScale: 0.001
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
