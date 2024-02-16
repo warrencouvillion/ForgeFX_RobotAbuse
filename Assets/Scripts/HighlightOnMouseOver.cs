@@ -43,6 +43,14 @@ public class HighlightOnMouseOver : MonoBehaviour
     
     public void setHiglightState(Material mat, bool state)
     {
+        //If another piece is being moved, don't highlight.
+        //Sometimes the cursor and part will diverge during motion, but we
+        //don't want to lose highlighting during motion.
+        if (Input.GetMouseButton(0))
+        {
+            return;
+        }
+
         Shader shader = mat.shader;
         if (shader != null)
         {
@@ -53,23 +61,15 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     void OnMouseOver()
     {
-        //If another piece is being moved, don't highlight
-        if (!Input.GetMouseButton(0))
-        {
-            DoHighlightAction((mat) => setHiglightState(mat, true));
-        }
+        DoHighlightAction((mat) => setHiglightState(mat, true));
     }
 
     void OnMouseExit()
     {
-        //Sometimes the cursor and part will diverge during motion, but we
-        //don't want to lose highlighting during motion.
-        if (!Input.GetMouseButton(0))
-        {
-            DoHighlightAction((mat) => setHiglightState(mat, false));
-        }
+        DoHighlightAction((mat) => setHiglightState(mat, false));
     }
 
+    //Motion is over when user releases mouse button, so stop highlighting.
     private void OnMouseUp()
     {
         DoHighlightAction((mat) => setHiglightState(mat, false));
