@@ -5,17 +5,15 @@ using UnityEngine;
 public class DragOnClick : MonoBehaviour
 {
     public float m_mouseMovementScale = 0.001f;
-    Transform rootXform;
-    //TODO: find the camera
-    public GameObject m_camera;
+    private Transform m_rootXform;
 
     // Start is called before the first frame update
     void Start()
     {
-        rootXform = transform;
-        while(rootXform.parent != null && rootXform.parent.gameObject.tag == gameObject.tag)
+        m_rootXform = transform;
+        while(m_rootXform.parent != null && m_rootXform.parent.gameObject.tag == gameObject.tag)
         {
-            rootXform = rootXform.parent;
+            m_rootXform = m_rootXform.parent;
         }
     }
 
@@ -53,9 +51,9 @@ public class DragOnClick : MonoBehaviour
 
         Debug.Log(deltaMouse);
 
-        if (rootXform != null) 
+        if (m_rootXform != null) 
         {
-            rootXform.position += m_camera.transform.TransformDirection(deltaMouse);
+            m_rootXform.position += Camera.main.transform.TransformDirection(deltaMouse);
         }
     }
 
