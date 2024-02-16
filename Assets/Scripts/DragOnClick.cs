@@ -5,15 +5,20 @@ using UnityEngine;
 public class DragOnClick : MonoBehaviour
 {
     public float m_mouseMovementScale = 0.001f;
-    private Transform m_rootXform;
+    private Transform m_groupRootXform;
+    private Vector3 m_anchorLocalPosition;
+    private Quaternion m_anchorLocalRotation;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_rootXform = transform;
-        while(m_rootXform.parent != null && m_rootXform.parent.gameObject.tag == gameObject.tag)
+        m_anchorLocalPosition = transform.localPosition;
+        m_anchorLocalRotation = transform.localRotation;
+
+        m_groupRootXform = transform;
+        while(m_groupRootXform.parent != null && m_groupRootXform.parent.gameObject.tag == gameObject.tag)
         {
-            m_rootXform = m_rootXform.parent;
+            m_groupRootXform = m_groupRootXform.parent;
         }
     }
 
@@ -42,6 +47,8 @@ public class DragOnClick : MonoBehaviour
     {
         if(!m_isMoving)
         {
+            m_groupRootXform.parent = null;
+
             m_lastMousePos = Input.mousePosition;
             m_isMoving=true;
         }
@@ -51,9 +58,9 @@ public class DragOnClick : MonoBehaviour
 
         Debug.Log(deltaMouse);
 
-        if (m_rootXform != null) 
+        if (m_groupRootXform != null) 
         {
-            m_rootXform.position += Camera.main.transform.TransformDirection(deltaMouse);
+            m_groupRootXform.position += Camera.main.transform.TransformDirection(deltaMouse);
         }
     }
 
