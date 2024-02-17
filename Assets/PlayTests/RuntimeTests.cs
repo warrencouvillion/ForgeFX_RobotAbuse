@@ -8,8 +8,33 @@ using UnityEngine.TestTools;
 //[TextFixture]
 public class RunTest
 {
-    InputTestFixture input = new InputTestFixture();
 
+    class MockInput : IInputInterface
+    {
+        public float GetAxis(string axisName)
+        {
+            return 1.0f;
+        }
+        public bool GetKey(KeyCode key)
+        {
+            return true;
+        }
+
+        public bool GetKeyDown(KeyCode key)
+        {
+            return true;
+        }
+
+        public Vector3 mousePosition
+        {
+            get { return Vector3.zero; }
+        }
+
+        public bool GetMouseButton(int button)
+        {
+            return true;
+        }
+    }
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
@@ -20,25 +45,24 @@ public class RunTest
         target.transform.position = new Vector3(0, 0, 0);
 
         //Create an object with a UFO movement
-        GameObject ufo = new GameObject();
-        ufo.AddComponent<UFOMovement>();
-        //Position the ufo away from the origin
-        ufo.transform.position = new Vector3(0, 10, 0);
+        GameObject ufoObj = new GameObject();
+        var ufoComp = ufoObj.AddComponent<UFOMovement>();
+        ufoComp.m_input = new MockInput();
+        
+        //Position the ufoObj away from the origin
+        ufoObj.transform.position = new Vector3(0, 10, 0);
         //Assert that the UFO is *not* looking at the target :w
         //(Testing the test)
-        Vector3 lookAtVec = ufo.transform.position - target.transform.position;
+        Vector3 lookAtVec = ufoObj.transform.position - target.transform.position;
         lookAtVec.Normalize();
-        Assert.AreNotEqual(lookAtVec, ufo.transform.forward);
-
-        //Now, simulate the <HOME> button to check that the ufo looks at the
-        //target
-        var keyboard = InputSystem.AddDevice<Keyboard>();
+        Assert.AreNotEqual(lookAtVec, ufoObj.transform.forward);
 
         
 
 
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
+
+
+
         yield return null;
     }
 }

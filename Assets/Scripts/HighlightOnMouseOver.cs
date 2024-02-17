@@ -24,24 +24,23 @@ public class HighlightOnMouseOver : MonoBehaviour
         }
         else
         {
-            var sameTag = GameObject.FindGameObjectsWithTag(gameObject.tag);
-            if (sameTag != null) 
+            var objsWithSameTage = GameObject.FindGameObjectsWithTag(gameObject.tag);
+            if (objsWithSameTage != null) 
             {
-                m_renderers = new Renderer[sameTag.Length];
+                m_renderers = new Renderer[objsWithSameTage.Length];
                 int index = 0;
-                foreach(var g in sameTag)
+                foreach(var gObj in objsWithSameTage)
                 {
-                    m_renderers[index++] = g.GetComponent<Renderer>();
-                    if(!CompareTag(g.transform.parent.gameObject.tag))
+                    m_renderers[index++] = gObj.GetComponent<Renderer>();
+                    if(!CompareTag(gObj.transform.parent.gameObject.tag))
                     {
-                        var hiliter = g.GetComponent<HighlightOnMouseOver>();
+                        var hiliter = gObj.GetComponent<HighlightOnMouseOver>();
                         if(hiliter != null)
                         {
                             m_highlightColor = hiliter.m_highlightColor;
                         }
 
                     }
-               
                 }
             }
         }

@@ -5,10 +5,21 @@ using UnityEngine;
 //TODO: write a wrapper around input for testing and time
 public class UFOMovement : MonoBehaviour
 {
+    class RealTime : ITimeInterface
+    {
+        public float deltaTime
+        {
+            get { return Time.deltaTime; }
+        }
+    }
+
     public float m_speed = 1.0f;
     public float m_rotationalSpeed = 1.0f;
     public GameObject m_target;
+
+    //Isoloated interfaces for testing
     public IInputInterface m_input;
+    public ITimeInterface m_time;
         
     CharacterController m_controller;
 
@@ -20,6 +31,11 @@ public class UFOMovement : MonoBehaviour
         {
             m_input = new RobotInput();
         }
+
+        if(m_time == null )
+        {
+            m_time = new RealTime();
+        }
     }
 
     // Update is called once per frame
@@ -29,12 +45,12 @@ public class UFOMovement : MonoBehaviour
         {
             Vector3 mouseEulers = 
                 new Vector3(-m_input.GetAxis("Vertical"), m_input.GetAxis("Horizontal"), 0) 
-                    * m_rotationalSpeed * Time.deltaTime;
+                    * m_rotationalSpeed * m_time.deltaTime;
             transform.Rotate(mouseEulers);
         }
         else
         {
-            float increment = m_speed * Time.deltaTime;
+            float increment = m_speed * m_time.deltaTime;
             m_controller.Move(m_input.GetAxis("Horizontal") * transform.right * increment);
             m_controller.Move(m_input.GetAxis("Vertical") * transform.forward * increment);
         }
