@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class DragOnClick : MonoBehaviour
@@ -9,15 +7,21 @@ public class DragOnClick : MonoBehaviour
     public float m_attachDistance = 0.1f;
     public float m_mouseMovementScale = 0.001f;
     public GameObject m_textObject = null;
-    TextMeshProUGUI m_textMesh = null;
 
+    private TextMeshProUGUI m_textMesh = null;
     private Transform m_groupRootXform;
     private Transform m_parentXform;
     private Vector3 m_anchorLocalPosition;
+    private IInputInterface m_input;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(m_input == null)
+        {
+            m_input = new RobotInput();
+        }
+
         if (m_textObject != null)
         {
             m_textMesh = m_textObject.GetComponent<TextMeshProUGUI>();
@@ -74,10 +78,10 @@ public class DragOnClick : MonoBehaviour
         if(!m_isMoving)
         {
             m_groupRootXform.parent = null;
-            m_lastMousePos = Input.mousePosition;
+            m_lastMousePos = m_input.mousePosition;
             m_isMoving = true;
         }
-        var mousePos = Input.mousePosition;
+        var mousePos = m_input.mousePosition;
         var deltaMouse = (mousePos - m_lastMousePos) * m_mouseMovementScale;
         m_lastMousePos = mousePos;
 

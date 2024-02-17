@@ -1,39 +1,45 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO: write a wrapper around input for testing and time
 public class UFOMovement : MonoBehaviour
 {
     public float m_speed = 1.0f;
     public float m_rotationalSpeed = 1.0f;
     public GameObject m_target;
+    public IInputInterface m_input;
         
     CharacterController m_controller;
+
     // Start is called before the first frame update
     void Start()
     {
         m_controller = gameObject.AddComponent<CharacterController>();
+        if(m_input == null )
+        {
+            m_input = new RobotInput();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        if (m_input.GetKey(KeyCode.LeftShift) || m_input.GetKey(KeyCode.RightShift))
         {
             Vector3 mouseEulers = 
-                new Vector3(-Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"), 0) 
+                new Vector3(-m_input.GetAxis("Vertical"), m_input.GetAxis("Horizontal"), 0) 
                     * m_rotationalSpeed * Time.deltaTime;
             transform.Rotate(mouseEulers);
-
         }
         else
         {
             float increment = m_speed * Time.deltaTime;
-            m_controller.Move(Input.GetAxis("Horizontal") * transform.right * increment);
-            m_controller.Move(Input.GetAxis("Vertical") * transform.forward * increment);
+            m_controller.Move(m_input.GetAxis("Horizontal") * transform.right * increment);
+            m_controller.Move(m_input.GetAxis("Vertical") * transform.forward * increment);
         }
 
-        if(Input.GetKeyDown(KeyCode.Home) || Input.GetKeyDown(KeyCode.Keypad7)) 
+        if(m_input.GetKeyDown(KeyCode.Home) || m_input.GetKeyDown(KeyCode.Keypad7)) 
         {
             StartCoroutine("LookAtTarget");
         }

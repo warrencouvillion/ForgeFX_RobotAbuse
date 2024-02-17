@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -12,10 +8,16 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     public Color m_highlightColor = Color.white;
     public float m_highlightPower = 1.0f;
+    public IInputInterface m_input;
         
     // Start is called before the first frame update
     void Start()
     {
+        if(m_input == null)
+        {
+            m_input = new RobotInput();
+        }
+
         if (gameObject.tag == "Untagged")
         {
             m_renderers = GetComponentsInChildren<Renderer>();
@@ -50,12 +52,12 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     }
     
-    public void setHiglightState(Material mat, bool state)
+    public void SetHiglightState(Material mat, bool state)
     {
         //If another piece is being moved, don't highlight.
         //Sometimes the cursor and part will diverge during motion, but we
         //don't want to lose highlighting during motion.
-        if (Input.GetMouseButton(0))
+        if (m_input.GetMouseButton(0))
         {
             return;
         }
@@ -72,18 +74,18 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     void OnMouseOver()
     {
-        DoHighlightAction((mat) => setHiglightState(mat, true));
+        DoHighlightAction((mat) => SetHiglightState(mat, true));
     }
 
     void OnMouseExit()
     {
-        DoHighlightAction((mat) => setHiglightState(mat, false));
+        DoHighlightAction((mat) => SetHiglightState(mat, false));
     }
 
     //Motion is over when user releases mouse button, so stop highlighting.
     private void OnMouseUp()
     {
-        DoHighlightAction((mat) => setHiglightState(mat, false));
+        DoHighlightAction((mat) => SetHiglightState(mat, false));
     }
 
     void DoHighlightAction(System.Action<Material> action)
