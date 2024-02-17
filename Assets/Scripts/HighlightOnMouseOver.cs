@@ -10,6 +10,7 @@ public class HighlightOnMouseOver : MonoBehaviour
     public Color m_highlightColor = Color.white;
     [Tooltip("Sharpness of higlight. (Note: Only value of root object will be used!)")]
     public float m_highlightPower = 1.0f;
+    [Tooltip("Select if only children of the part are to be hilighted, instead of everything in its tagged group.")]
     public bool m_onlyHighlightChildren = false;
 
     //Used for testing.
