@@ -10,7 +10,9 @@ public class HighlightOnMouseOver : MonoBehaviour
     public Color m_highlightColor = Color.white;
     [Tooltip("Sharpness of higlight. (Note: Only value of root object will be used!)")]
     public float m_highlightPower = 1.0f;
-    [Tooltip("Used for testing")]
+    public bool m_onlyHighlightChildren = false;
+
+    //Used for testing.
     public IInputInterface m_input;
         
     // Start is called before the first frame update
@@ -94,8 +96,11 @@ public class HighlightOnMouseOver : MonoBehaviour
     { 
         foreach(var rend in m_renderers)
         {
-            var mat = rend.material;
-            action(mat);
+            if (!m_onlyHighlightChildren || rend.gameObject.transform.IsChildOf(gameObject.transform))
+            {
+                var mat = rend.material;
+                action(mat);
+            }
         }
 
     }
