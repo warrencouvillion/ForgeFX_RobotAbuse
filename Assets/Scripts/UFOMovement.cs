@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 
-//TODO: write a wrapper around input for testing and time
 public class UFOMovement : MonoBehaviour
 {
     class RealTime : ITimeInterface

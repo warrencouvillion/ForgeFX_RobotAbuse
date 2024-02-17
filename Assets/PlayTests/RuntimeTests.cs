@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,33 +9,6 @@ using UnityEngine.TestTools;
 //[TextFixture]
 public class RunTest
 {
-
-    class MockInput : IInputInterface
-    {
-        public float GetAxis(string axisName)
-        {
-            return 1.0f;
-        }
-        public bool GetKey(KeyCode key)
-        {
-            return true;
-        }
-
-        public bool GetKeyDown(KeyCode key)
-        {
-            return true;
-        }
-
-        public Vector3 mousePosition
-        {
-            get { return Vector3.zero; }
-        }
-
-        public bool GetMouseButton(int button)
-        {
-            return true;
-        }
-    }
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
@@ -44,10 +18,12 @@ public class RunTest
         GameObject target = new GameObject();
         target.transform.position = new Vector3(0, 0, 0);
 
+        //Create mock input & time services
+        var mockInput = Substitute.For<IInputInterface>();
+
         //Create an object with a UFO movement
         GameObject ufoObj = new GameObject();
         var ufoComp = ufoObj.AddComponent<UFOMovement>();
-        ufoComp.m_input = new MockInput();
         
         //Position the ufoObj away from the origin
         ufoObj.transform.position = new Vector3(0, 10, 0);

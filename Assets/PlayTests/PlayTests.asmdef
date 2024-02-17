@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "ScriptsAssembly",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InputSystem.TestFramework",
+        "TNRD.NSubstitute"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
