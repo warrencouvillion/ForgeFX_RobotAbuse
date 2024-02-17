@@ -1,9 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-
+/**
+ * Implements a UFO style movement using only the keyboard. WASD or arrow keys
+ * will move the attached object. 
+ * When either <SHIFT> key is down, the WASD keys affect rotation.
+ * The <HOME> or <KeyPad7> keys will make the attached object look at the
+ * object designated in the target parameter.
+ */
 public class UFOMovement : MonoBehaviour
 {
+    /**
+     * Gives access to the Unity Time.deltaTime property
+     */
     class RealTime : ITimeInterface
     {
         public float deltaTime
@@ -12,8 +21,11 @@ public class UFOMovement : MonoBehaviour
         }
     }
 
+    [Tooltip("How fast the object will move")]
     public float m_speed = 1.0f;
+    [Tooltip("How fast the object will rotate")]
     public float m_rotationalSpeed = 1.0f;
+    [Tooltip("Object that will be looked at when <Home> or <KeyPad 7> key is pressed")]
     public GameObject m_target;
 
     //Isoloated interfaces for testing
@@ -54,7 +66,9 @@ public class UFOMovement : MonoBehaviour
             m_controller.Move(m_input.GetAxis("Vertical") * transform.forward * increment);
         }
 
-        if(m_input.GetKeyDown(KeyCode.Home) || m_input.GetKeyDown(KeyCode.Keypad7)) 
+        //Because popping is ugly and confusing, rotate to look at the target. This will also keep the
+        //player better aware of his location wrt the target.
+        if(m_target != null && (m_input.GetKeyDown(KeyCode.Home) || m_input.GetKeyDown(KeyCode.Keypad7))) 
         {
             StartCoroutine("LookAtTarget");
         }

@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 
-//[TextFixture]
 public class RunTest
 {
     const float tolerance = 0.02f;

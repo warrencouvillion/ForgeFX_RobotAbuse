@@ -2,10 +2,19 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
+/**
+ * Used to move an attached group of parts when the mouse is clicked over any
+ * one of the parts and dragged.
+ * The parts of of the group must be connected and all have the same tag.
+ */
 public class DragOnClick : MonoBehaviour
 {
+    [Tooltip("How close a part has to be to reattach. Note: only the value of the root part will be used.")]
     public float m_attachDistance = 0.1f;
+    [Tooltip("Scales part movement to mouse movement. Note: only the value of the root part will be used.")]
     public float m_mouseMovementScale = 0.001f;
+    [Tooltip("GameObject with a TextMeshProUGUI component used to display attach messages. Note: only the value" +
+        " of the root part will be used.")]
     public GameObject m_textObject = null;
 
     private TextMeshProUGUI m_textMesh = null;
@@ -35,6 +44,8 @@ public class DragOnClick : MonoBehaviour
         m_parentXform = m_groupRootXform.parent;
         m_anchorLocalPosition = m_groupRootXform.localPosition;
 
+        //Because we don't know the order the scripts in the group will
+        //initialize, wait a bit before copying values from the root part.
         if (m_groupRootXform != transform)
         {
             Invoke("GetValuesFromRoot", 0.5f);
@@ -50,6 +61,7 @@ public class DragOnClick : MonoBehaviour
         {
             m_attachDistance = dragger.m_attachDistance;
             m_textMesh = dragger.m_textMesh;
+            m_mouseMovementScale = dragger.m_mouseMovementScale;
         }
     }
 

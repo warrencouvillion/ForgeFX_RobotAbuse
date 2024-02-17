@@ -6,8 +6,11 @@ public class HighlightOnMouseOver : MonoBehaviour
 {
     Renderer[] m_renderers;
 
+    [Tooltip("Color of higlight. (Note: Only color of root object will be used!)")]
     public Color m_highlightColor = Color.white;
+    [Tooltip("Sharpness of higlight. (Note: Only value of root object will be used!)")]
     public float m_highlightPower = 1.0f;
+    [Tooltip("Used for testing")]
     public IInputInterface m_input;
         
     // Start is called before the first frame update
