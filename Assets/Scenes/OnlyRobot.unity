@@ -142,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 0, b: 0, a: 1}
   m_highlightPower: 3
+  m_onlyHighlightChildren: 0
 --- !u!136 &137368824
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 1, b: 1, a: 1}
   m_highlightPower: 1
+  m_onlyHighlightChildren: 0
 --- !u!114 &140769893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 0, g: 1, b: 0, a: 1}
   m_highlightPower: 1
+  m_onlyHighlightChildren: 0
 --- !u!114 &505643377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 1, b: 1, a: 1}
   m_highlightPower: 1
+  m_onlyHighlightChildren: 0
 --- !u!114 &841564576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,6 +1255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 1, b: 0, a: 1}
   m_highlightPower: 2
+  m_onlyHighlightChildren: 1
 --- !u!65 &1655353169
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,6 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 1, b: 1, a: 1}
   m_highlightPower: 1
+  m_onlyHighlightChildren: 0
 --- !u!135 &1656200650
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1629,6 +1635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_highlightColor: {r: 1, g: 1, b: 1, a: 1}
   m_highlightPower: 1
+  m_onlyHighlightChildren: 0
 --- !u!136 &1984867281
 CapsuleCollider:
   m_ObjectHideFlags: 0
