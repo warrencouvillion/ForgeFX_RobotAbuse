@@ -21,14 +21,15 @@ public class HighlightOnMouseOver : MonoBehaviour
     {
         if(m_input == null)
         {
-            m_input = new RobotInput();
+            m_input = new UnityInput();
         }
 
+        //If untagged, highlight all all attache chilldren
         if (gameObject.tag == "Untagged")
         {
             m_renderers = GetComponentsInChildren<Renderer>();
         }
-        else
+        else //Otherwise, highlight objectw with the same tag
         {
             var objsWithSameTage = GameObject.FindGameObjectsWithTag(gameObject.tag);
             if (objsWithSameTage != null) 
@@ -57,6 +58,7 @@ public class HighlightOnMouseOver : MonoBehaviour
 
     }
     
+    //Set whether higlight is on or off
     public void SetHiglightState(Material mat, bool state)
     {
         //If another piece is being moved, don't highlight.
@@ -93,14 +95,15 @@ public class HighlightOnMouseOver : MonoBehaviour
         DoHighlightAction((mat) => SetHiglightState(mat, false));
     }
 
+    //Perform an action on all the materials stored in m_renderers.
     void DoHighlightAction(System.Action<Material> action)
     { 
         foreach(var rend in m_renderers)
         {
+            //If we're highlighting everything, or this is a child, perform the action.
             if (!m_onlyHighlightChildren || rend.gameObject.transform.IsChildOf(gameObject.transform))
             {
-                var mat = rend.material;
-                action(mat);
+                action(rend.material);
             }
         }
 

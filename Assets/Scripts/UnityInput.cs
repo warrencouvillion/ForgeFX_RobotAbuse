@@ -1,6 +1,6 @@
 using UnityEngine;
 
-class RobotInput : IInputInterface
+class UnityInput : IInputInterface
 {
     public float GetAxis(string axisName)
     {

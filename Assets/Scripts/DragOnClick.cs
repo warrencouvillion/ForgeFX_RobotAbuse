@@ -28,24 +28,28 @@ public class DragOnClick : MonoBehaviour
     {
         if(m_input == null)
         {
-            m_input = new RobotInput();
+            m_input = new UnityInput();
         }
 
         if (m_textObject != null)
         {
             m_textMesh = m_textObject.GetComponent<TextMeshProUGUI>();
         }
+        
+        //Find the root transfor of the group
         m_groupRootXform = transform;
         while (m_groupRootXform.parent != null && m_groupRootXform.parent.gameObject.tag == gameObject.tag)
         {
             m_groupRootXform = m_groupRootXform.parent;
         }
 
+        //Save the parent and relative position for reattachment
         m_parentXform = m_groupRootXform.parent;
         m_anchorLocalPosition = m_groupRootXform.localPosition;
 
         //Because we don't know the order the scripts in the group will
         //initialize, wait a bit before copying values from the root part.
+        //This will give a chance for all parts to find the root part.
         if (m_groupRootXform != transform)
         {
             Invoke("GetValuesFromRoot", 0.5f);
@@ -54,7 +58,7 @@ public class DragOnClick : MonoBehaviour
 
     private void GetValuesFromRoot()
     {
-        //All parts of a group should have the same anchor distance as the root
+        //All parts of a group should have the same settings as the root
         //part.
         var dragger = m_groupRootXform.gameObject.GetComponent<DragOnClick>();
         if( dragger != null )
@@ -73,9 +77,11 @@ public class DragOnClick : MonoBehaviour
         set
         {
             m_movingState = value;
+
             //Hide the cursor during motion so user can't tell when it's not
             //over the part. The part becomes the cursor.
             Cursor.visible = !value;
+
             if (m_textMesh != null && value)
             {
                 m_textMesh.text = "Detached";
@@ -87,6 +93,7 @@ public class DragOnClick : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        //If we're not moving, start moving
         if(!m_isMoving)
         {
             m_groupRootXform.parent = null;
@@ -99,6 +106,8 @@ public class DragOnClick : MonoBehaviour
 
         if (m_groupRootXform != null) 
         {
+            //Transform the scaled mouse direction to move in the XY plane 
+            //of the camera.
             m_groupRootXform.position += Camera.main.transform.TransformDirection(deltaMouse);
         }
     }
@@ -106,6 +115,9 @@ public class DragOnClick : MonoBehaviour
     private void OnMouseUp()
     {
         m_isMoving = false;
+
+        //If there's a parent, check to see if the part group released is close
+        //enough to be reattached.
         if (m_parentXform != null)
         {
             //Get anchor point in world coordinates.
@@ -114,6 +126,7 @@ public class DragOnClick : MonoBehaviour
             float distance = Vector3.Distance(m_groupRootXform.position, anchorPointWorld); 
             if(distance < m_attachDistance)
             {
+                //Because popping is ugly, have the part move into position.
                 StartCoroutine("ReturnToStartPosition");
             }
         }
@@ -121,7 +134,10 @@ public class DragOnClick : MonoBehaviour
 
     private IEnumerator ReturnToStartPosition()
     {
+        //Reattach the part group
         m_groupRootXform.parent = m_parentXform;
+
+        //Save the current group position
         var startPos = m_groupRootXform.localPosition;
         for (float frac = 0; frac < 1.0f; frac += 0.2f) 
         {
@@ -129,7 +145,10 @@ public class DragOnClick : MonoBehaviour
             m_groupRootXform.localPosition= pos;
             yield return new WaitForSeconds(1.0f/30.0f);
         }
+        //Just to make sure the group is in its original position wrt the
+        //parent.
         m_groupRootXform.localPosition = m_anchorLocalPosition;
+
         if (m_textMesh != null)
         {
             m_textMesh.text = "Attached";

@@ -13,7 +13,7 @@ public class UFOMovement : MonoBehaviour
     /**
      * Gives access to the Unity Time.deltaTime property
      */
-    class RealTime : ITimeInterface
+    class UnityTime : ITimeInterface
     {
         public float deltaTime
         {
@@ -38,34 +38,35 @@ public class UFOMovement : MonoBehaviour
     void Start()
     {
         m_controller = gameObject.AddComponent<CharacterController>();
+
         if(m_input == null )
         {
-            m_input = new RobotInput();
+            m_input = new UnityInput();
         }
 
         if(m_time == null )
         {
-            m_time = new RealTime();
+            m_time = new UnityTime();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //If a shift key is down, pan and tilt based on key input.
         if (m_input.GetKey(KeyCode.LeftShift) || m_input.GetKey(KeyCode.RightShift))
         {
-            Vector3 mouseEulers = 
-                new Vector3(-m_input.GetAxis("Vertical"), m_input.GetAxis("Horizontal"), 0) 
-                    * m_rotationalSpeed * m_time.deltaTime;
-            transform.Rotate(mouseEulers);
+            transform.Rotate(new Vector3(-m_input.GetAxis("Vertical"), m_input.GetAxis("Horizontal"), 0) 
+                    * m_rotationalSpeed * m_time.deltaTime);
         }
-        else
+        else //Otherwise, dolly the camera
         {
             float increment = m_speed * m_time.deltaTime;
             m_controller.Move(m_input.GetAxis("Horizontal") * transform.right * increment);
             m_controller.Move(m_input.GetAxis("Vertical") * transform.forward * increment);
         }
 
+        //If <HOME> or 7 on the numeric keypad got presse, look at the target.
         //Because popping is ugly and confusing, rotate to look at the target. This will also keep the
         //player better aware of his location wrt the target.
         if(m_target != null && (m_input.GetKeyDown(KeyCode.Home) || m_input.GetKeyDown(KeyCode.Keypad7))) 

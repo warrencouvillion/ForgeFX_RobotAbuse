@@ -48,13 +48,13 @@ public class RunTest
 
         lookAtVec = target.transform.position - ufoObj.transform.position;
         lookAtVec.Normalize();
-        //Check that the ufo is now looking at the target. If it is, it's 
+        //Check that the ufo is now looking at the target. If it is, its 
         //forward vector should be pretty close to the lookAtVec calculated above.
         //Because we don't expect all the floating point operations to yield 
         //exactly equal vectors, check the individual components.
-        Assert.AreEqual(lookAtVec.x, ufoObj.transform.forward.x, 0.01);
-        Assert.AreEqual(lookAtVec.y, ufoObj.transform.forward.y, 0.01);
-        Assert.AreEqual(lookAtVec.z, ufoObj.transform.forward.z, 0.01);
+        Assert.AreEqual(lookAtVec.x, ufoObj.transform.forward.x, tolerance);
+        Assert.AreEqual(lookAtVec.y, ufoObj.transform.forward.y, tolerance);
+        Assert.AreEqual(lookAtVec.z, ufoObj.transform.forward.z, tolerance);
     }
 
     [UnityTest]
